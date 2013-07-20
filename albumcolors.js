@@ -78,11 +78,19 @@
 	 * A Class for the to wrap image,
 	 * used for counting raw color pixels
 	 */
-	AlbumImage = function(url) {
+	AlbumImage = function(url, image) {
 		this.url = url;
+
+		if (image) {
+			this.image = image;
+		}
 	};
 
 	AlbumImage.prototype.fetch = function(callback) {
+		if (this.image) {
+			callback(this);
+			return;
+		}
 		var that = this;
 
 		this.image = new Image();
@@ -138,9 +146,9 @@
 	 * AlbumColors
 	 * Generate pallete among dominating colors
 	 */
-	AlbumColors = function(imageUrl) {
+	AlbumColors = function(imageUrl, imageObj) {
 		this.imageUrl = imageUrl;
-		this.image = new AlbumImage(imageUrl);
+		this.image = new AlbumImage(imageUrl, imageObj);
 	};
 
 	AlbumColors.prototype.getColors = function(callback) {
